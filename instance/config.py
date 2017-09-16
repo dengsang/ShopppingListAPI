@@ -2,16 +2,22 @@ import os
 
 
 class Config(object):
-    """Parent configuration class."""
+    """Parent configuration class.
+    source env/bin/activate
+    # DATABASE_URL = 'postgresql://localhost/flask_api'
+    """
     DEBUG = False
     CSRF_ENABLED = True
-    SECRET = os.getenv('SECRET')
+    SECRET = os.getenv('some-very-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    FLASK_APP = 'run.py'
+    DATABASE_URL = 'jdbc:postgresql://localhost/flask_api:5432/postgres'
 
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
+    APP_SETTINGS = 'development'
 
 
 class TestingConfig(Config):
