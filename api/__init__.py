@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request, jsonify, abort
 
 from instance.config import app_config
-from app.models import ShoppingListApi
+from api.models import ShoppingListApi
 
 # initialize sql-alchemy
 db = SQLAlchemy()
