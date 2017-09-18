@@ -1,6 +1,6 @@
 import unittest
 import json
-from app import create_app, db
+from api import create_app, db
 
 """This class represents the shopping list test case"""
 
