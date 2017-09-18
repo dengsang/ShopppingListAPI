@@ -1,6 +1,6 @@
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
-from flask import request, jsonify
+from flask import request, jsonify, abort
 
 from instance.config import app_config
 from app.models import ShoppingListApi
@@ -49,6 +49,47 @@ def create_app(config_name):
                 }
                 results.append(obj)
             response = jsonify(results)
+            response.status_code = 200
+            return response
+
+    @app.route('/dashboard/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+    def dashboard_manipulation(id, **kwargs):
+        # retrieve a shopping list using it's ID
+        shopping_list = ShoppingListApi.query.filter_by(id=id).first()
+        if not shopping_list:
+            # Raise an HTTPException with a 404 not found status code
+            abort(404)
+
+        if request.method == 'DELETE':
+            shopping_list.delete()
+            return {
+                       "message": "Shopping list {} deleted successfully".format(shopping_list.id)
+                   }, 200
+
+        elif request.method == 'PUT':
+            items = str(request.data.get(item='', quantity='', price=''))
+            shopping_list.name = items
+            shopping_list.save()
+            response = jsonify({
+                'id': shopping_list.id,
+                'item': shopping_list.item,
+                'quantity': shopping_list.quantity,
+                'price': shopping_list.price,
+                'date_created': shopping_list.date_created,
+                'date_modified': shopping_list.date_modified
+            })
+            response.status_code = 200
+            return response
+        else:
+            # GET
+            response = jsonify({
+                'id': shopping_list.id,
+                'item': shopping_list.item,
+                'quantity': shopping_list.quantity,
+                'price': shopping_list.price,
+                'date_created': shopping_list.date_created,
+                'date_modified': shopping_list.date_modified
+            })
             response.status_code = 200
             return response
 
