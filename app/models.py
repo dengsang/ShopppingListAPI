@@ -6,9 +6,10 @@ class ShoppingListApi(db.Model):
 
     __tablename__ = 'shopping_list'
 
-    item = db.Column(db.String(255), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    item = db.Column(db.String(255), nullable=False, unique=True)
     price = db.Column(db.Integer(30))
-    quantity = db.Column(db.Integer(20))
+    quantity = db.Column(db.Integer(20), nullable=False)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
@@ -38,9 +39,10 @@ class User(db.Model):
 
     __tablename__ = 'shopping_users'
 
-    email = db.Column(db.String(255), primary_key=True)
-    username = db.Column(db.String(255))
-    password = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    username = db.Column(db.String(80), nullable=False, unique=True)
+    password = db.Column(db.String(40), nullable=False)
 
     def __init__(self, email, username, password):
         self.email = email
