@@ -11,7 +11,6 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
-
     app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
@@ -38,10 +37,10 @@ def create_app(config_name):
                 return response
         else:
             # GET
-            shoppings = ShoppingListApi.get_all()
+            shopping = ShoppingListApi.get_all()
             results = []
 
-            for shopping_list in shoppings:
+            for shopping_list in shopping:
                 obj = {
                     'id': shopping_list.id,
                     'item': shopping_list.item,
@@ -61,7 +60,7 @@ def create_app(config_name):
         shopping_list = ShoppingListApi.query.filter_by(id=id).first()
         if not shopping_list:
             # Raise an HTTPException with a 404 not found status code
-            abort(404)
+            return abort(404)
 
         if request.method == 'DELETE':
             shopping_list.delete()
@@ -94,7 +93,7 @@ def create_app(config_name):
                 'date_modified': shopping_list.date_modified
             })
             response.status_code = 200
-            return response
+        return response
 
     """User Sign Up Api section"""
     @app.route('/signup/', methods=['POST', 'GET'])

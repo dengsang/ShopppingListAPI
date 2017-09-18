@@ -1,4 +1,4 @@
-from api import db
+from api.__init__ import db
 
 
 class ShoppingListApi(db.Model):
