@@ -53,7 +53,7 @@ def create_app(config_name):
             return response
 
     @app.route('/dashboard/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-    def dashboard_manipulation(id, **kwargs):
+    def dashboard_manipulation(id):
         # retrieve a shopping list using it's ID
         shopping_list = ShoppingListApi.query.filter_by(id=id).first()
         if not shopping_list:
