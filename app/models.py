@@ -7,16 +7,16 @@ class ShoppingListApi(db.Model):
     __tablename__ = 'shopping_list'
 
     item = db.Column(db.String(255), primary_key=True)
-    quantity = db.Column(db.Integer(20))
     price = db.Column(db.Integer(30))
+    quantity = db.Column(db.Integer(20))
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
 
     def __init__(self, item, quantity, price):
         self.item = item
-        self.quantity = quantity
         self.price = price
+        self.quantity = quantity
 
     def save(self):
         db.session.add(self)
