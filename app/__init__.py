@@ -20,9 +20,10 @@ def create_app(config_name):
     @app.route('/dashboard/', methods=['POST', 'GET'])
     def dashboard():
         if request.method == "POST":
-            items = str(request.data.get(item='', price='', quantity=''))
+            items = str(request.data.get(item='', quantity='', price=''))
             if items:
-                shopping_list = ShoppingListApi(item='item', quantity='quantity', price='price')
+                shopping_list = ShoppingListApi(item=request.data.item, quantity=request.data.quantity,
+                                                price=request.data.price)
                 shopping_list.save()
                 response = jsonify({
                     'item': shopping_list.item,
