@@ -32,7 +32,7 @@ class ShoppingListApi(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Shopping-List: {}>".format({self.item, self.quantity, self.price})
+        return "<ShoppingListApi: {}>".format({self.item, self.quantity, self.price})
 
 
 class User(db.Model):
@@ -62,4 +62,4 @@ class User(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Shopping App Users: {}>".format({self.email, self.username, self.password})
+        return "<User: {}>".format({self.email, self.username, self.password})
